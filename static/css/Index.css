@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded");
+@import "./Variables.css";
+@import "./Table.css";
+@import "./Form.css";
+@import "./Flex.css";
+@import "./Grid.css";
+@import "./Buttons.css";
+@import "./Link.css";
+@import "./Loading.css";
+@import "./Animations.css";
+
+* {
+    box-sizing: border-box;
+    font-family: "Poppins";
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    background-color: #f9f9f9;
+}
+
+
+.flex.gap,
+.grid.gap {
+    gap: 1rem;
+}
+
+.container {
+    width: 95%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.panel {
+    background-color: white;
+    border-radius: 1rem;
+    padding: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.hidden {
+    display: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.divider {
+    height: 1px;
+    background-color: var(--gray);
+}
+
+svg,
+img {
+    width: 100%;
+}
+
+@media print {
+    body {
+        visibility: hidden;
+    }
+
+    #print {
+        visibility: visible;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
