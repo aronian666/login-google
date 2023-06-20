@@ -92,7 +92,7 @@
                 </p>
                 <p>NO. OPE {record.operation}</p>
             </div>
-            <p class="text-center">{record.type}</p>
+            <p class="text-center">{record.type.name}</p>
 
             <section>
                 {#each inputs[0] as { name, value }}
