@@ -3,16 +3,20 @@
     import { Form, Input } from "../../../../lib/components";
     export let record;
     export let rates = [];
+    console.log(
+        rates
+            .filter((record) => record.type_id === 5)
+            .sort((a, b) => a.min - b.max)
+    );
     const onClose = getContext("onClose");
     $: {
-        if (record.type_id === 5) {
-            const rate = rates.find(
-                ({ min, max }) => record.value >= min && record.value < max
-            );
-            record.commission = rate ? rate.commission : 0.5;
-        } else {
-            record.commission = 0;
-        }
+        const rate = rates.find(
+            ({ min, max, type_id }) =>
+                record.value >= min &&
+                record.value < max &&
+                type_id === record.type_id
+        );
+        record.commission = rate ? rate.commission : 0;
     }
 </script>
 
