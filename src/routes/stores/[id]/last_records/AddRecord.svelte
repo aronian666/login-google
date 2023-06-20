@@ -13,7 +13,7 @@
         const rate = rates.find(
             ({ min, max, type_id }) =>
                 record.value >= min &&
-                record.value < max &&
+                record.value <= max &&
                 type_id === record.type_id
         );
         record.commission = rate ? rate.commission : 0;
