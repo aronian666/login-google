@@ -1,6 +1,5 @@
 <script>
     import { Logo, Modal } from "../lib/components";
-    import Three from "../lib/components/Three.svelte";
     import Login from "./Login.svelte";
     let login;
     const size = {};
@@ -35,7 +34,7 @@
     </section>
     <section bind:clientWidth={size.width} bind:clientHeight={size.height}>
         {#if size.width && size.height}
-            <Three {...size} />
+            <Logo />
         {/if}
     </section>
 </main>
