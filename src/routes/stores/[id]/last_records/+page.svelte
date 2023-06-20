@@ -59,7 +59,7 @@
             <button
                 on:click={async (e) => {
                     $loading = true;
-                    await store.getNewRecord(1, {
+                    await store.getNewRecord(3, {
                         store_id: data.store.id,
                         user_id: data.current_user.id,
                     });
