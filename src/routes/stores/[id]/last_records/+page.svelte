@@ -70,6 +70,7 @@
                 <iconify-icon icon="lucide:download-cloud" width="1.5rem" />
                 Actualizar
             </button>
+
             <button
                 class="alpha"
                 on:click={(e) => {
@@ -89,22 +90,19 @@
                 Agregar ingresos
             </button>
             <button
-                class="holed"
                 on:click={async (e) => {
-                    const report = new Report({
-                        user_id: data.current_user.id,
+                    $loading = true;
+                    await store.getNewRecord(3, {
                         store_id: data.store.id,
-                        commission: summary[2].value,
-                        up: summary[0].value,
-                        down: summary[1].value,
-                        operations: data.records.length,
+                        user_id: data.current_user.id,
                     });
-                    await report.create(false);
-                    //goto(`/stores/${store.id}`);
+                    await invalidateAll();
+                    $loading = false;
                 }}
+                class="holed"
             >
-                <iconify-icon icon="lucide:clipboard-x" width="1.5rem" />
-                Cerrar dia
+                <iconify-icon icon="ph:download-bold" width="1.5rem" />
+                Actualizacion profunda
             </button>
         </div>
         <Table
