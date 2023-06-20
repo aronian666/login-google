@@ -77,7 +77,6 @@
     };
     const inputs = getInput(record);
     onMount(() => {
-        window.print();
         record.print = true;
         record.save();
     });
