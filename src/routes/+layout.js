@@ -1,6 +1,6 @@
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public'
 import { createSupabaseLoadClient } from '@supabase/auth-helpers-sveltekit'
-
+import { User } from '../lib/tables'
 
 export const load = async ({ fetch, data, depends }) => {
     depends('supabase:auth')
@@ -13,5 +13,5 @@ export const load = async ({ fetch, data, depends }) => {
 
     const { data: { session } } = await supabase.auth.getSession()
 
-    return { supabase, session, current_user: session?.user }
+    return { supabase, session, current_user: session && structuredClone(new User(session.user)) }
 }

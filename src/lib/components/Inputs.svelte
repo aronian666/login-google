@@ -5,7 +5,6 @@
     import File from "./File.svelte";
     import Radio from "./Radio.svelte";
     import TextArea from "./TextArea.svelte";
-    import Icon from "./Icon.svelte";
     const components = {
         select: Select,
         checkbox: Checkbox,
@@ -73,7 +72,7 @@
                                 object = object;
                             }}
                         >
-                            <Icon icon="close" style="font-size:1.25rem" />
+                            x
                         </button>
                     </li>
                 {/each}

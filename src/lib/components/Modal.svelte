@@ -1,7 +1,7 @@
 <script>
     import { onMount, setContext } from "svelte";
     import { scale } from "svelte/transition";
-    import Icon from "./Icon.svelte";
+
     export let onClose;
     setContext("onClose", onClose);
     let modal;
@@ -20,7 +20,7 @@
     <section bind:this={modal} {...$$restProps} in:scale>
         <slot />
         <button class="holed" style="--color: black" on:click={onClose}>
-            <Icon icon="close" />
+            <iconify-icon icon="lucide:x" width="1.5rem" />
         </button>
     </section>
 </div>

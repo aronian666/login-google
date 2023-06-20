@@ -31,6 +31,12 @@ export const appendFormData = (formData1, formData2) => {
 export const negateString = (string) => `^((?!${string}).)*$`
 export const groupBy = function (xs, key) {
     return xs.reduce(function (rv, x) {
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+    }, {});
+};
+export const groupByOne = function (xs, key) {
+    return xs.reduce(function (rv, x) {
         rv[x[key]] = x
         return rv;
     }, {});
@@ -48,3 +54,5 @@ export const dateToInput = (date = new Date()) => {
     const month = ("0" + (date.getUTCMonth() + 1)).slice(-2);
     return date.getUTCFullYear() + "-" + (month) + "-" + (day);
 }
+
+export const formater = new Intl.DateTimeFormat("es")

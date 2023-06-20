@@ -1,46 +1,50 @@
 <script>
-    import { onMount } from "svelte";
-    import { Logo } from "../lib/components";
-    import NavHome from "./NavHome.svelte";
-
-    let angle = 0;
-    let plus = 1;
-    onMount(() => {
-        function interval() {
-            const min = 1,
-                max = 3;
-            const rand = Math.floor(Math.random() * (max - min + 1) + min); //Generate Random number between 5 - 10
-            plus = plus * -1;
-            setTimeout(interval, rand * 1000);
-        }
-        interval();
-        const animation = (time) => {
-            angle += Math.round(Math.random()) * plus;
-            requestAnimationFrame(animation);
-        };
-        animation(0);
-    });
+    import { Logo, Modal } from "../lib/components";
+    import Three from "../lib/components/Three.svelte";
+    import Login from "./Login.svelte";
+    let login;
+    const size = {};
 </script>
 
-<NavHome />
+<header>
+    <nav class="container flex content gap items" style="--c: space-between">
+        <a href="/">
+            <img src="/images/logo.svg" alt="Logo" />
+        </a>
+        <div class="flex gap">
+            <button on:click={(e) => (login = false)}>Iniciar sesion</button>
+            <button on:click={(e) => (login = true)} class="holed"
+                >Registrarse</button
+            >
+        </div>
+    </nav>
+</header>
 <main class="container grid auto-fit content" style="gap: 1rem">
     <section class="flex direction content">
         <h1 class="wrap items" style="--i: end">
-            <span style="--angle: {angle}deg">ASTREA</span>bank
+            <span>ASTREA</span>bank
         </h1>
         <div class="grid gap">
             <p>
                 Cobra y estafa a las personas por transacciones que son gratis!
             </p>
             <div class="flex gap">
-                <a href="/signIn" class="button">Mas informacion</a>
+                <button on:click={(e) => (login = true)}>Empezar</button>
             </div>
         </div>
     </section>
-    <section>
-        <Logo />
+    <section bind:clientWidth={size.width} bind:clientHeight={size.height}>
+        {#if size.width && size.height}
+            <Three {...size} />
+        {/if}
     </section>
 </main>
+
+{#if login !== undefined}
+    <Modal class="panel grid gap" onClose={(e) => (login = undefined)}>
+        <Login signUp={login} />
+    </Modal>
+{/if}
 
 <style>
     h1 {
@@ -62,5 +66,14 @@
     }
     main {
         height: 100svh;
+    }
+    header {
+        position: fixed;
+        left: 0;
+        right: 0;
+        padding: 0.5rem 0;
+    }
+    a img {
+        width: 3.5rem;
     }
 </style>

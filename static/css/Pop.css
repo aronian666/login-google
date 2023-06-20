@@ -1,0 +1,27 @@
+.pop {
+    position: relative;
+}
+
+.pop>div {
+    position: absolute;
+    display: none;
+    top: calc(100% + 0.25rem);
+    z-index: 1;
+}
+
+.pop>div.center {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pop>div.rigth {
+    left: 0;
+}
+
+.pop>div.left {
+    right: 0;
+}
+
+.pop:focus-within>div {
+    display: grid;
+}

@@ -1,7 +1,7 @@
 a.button,
 button {
-    --color: var(--gradient);
-    padding: clamp(0.3rem, 2vw, 0.6rem) clamp(0.6rem, 2vw, 1.5rem);
+    --color: var(--color1);
+    padding: 0.6rem clamp(1rem, 2vw, 1.5rem);
     border-radius: 0.25rem;
     border: none;
     background: var(--color);
@@ -14,31 +14,29 @@ button {
     place-content: center;
     align-items: center;
     font-weight: 500;
+    font-size: 0.9rem;
 }
 
-button.icon {
+button.z0,
+a.button.z0 {
     padding: 0;
-    background: white;
-    color: black;
-    border: 1px solid black;
+    background-color: transparent;
+}
+
+button.z1,
+a.button.z1 {
+    padding: clamp(0.3rem, 2vw, 0.6rem);
 }
 
 a.button.holed,
 button.holed {
-    --color: var(--dark);
+    --color: var(--color1);
     box-shadow: inset 0 0 0 1px var(--color);
     background: white;
-    color: var(--color, var(--dark));
+    color: var(--color, var(--color1));
     transition-duration: .2s;
 }
 
-a.button.holed:hover,
-button.holed:hover {
-    --color: var(--dark);
-    background: var(--color);
-    color: white;
-    text-decoration: none;
-}
 
 a.button:hover,
 button:hover {
@@ -59,6 +57,16 @@ a.button.alpha {
     background-color: color-mix(in srgb, var(--color), transparent calc((1 - var(--alpha)) * 100%));
 }
 
+button.float,
+a.button.float {
+    background-color: transparent;
+    color: black;
+}
+
+button.float:hover,
+a.button.float:hover {
+    background-color: #00000010;
+}
 
 :is(a.button, button) .material-symbols-rounded {
     font-size: 1.47rem;

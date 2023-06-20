@@ -1,5 +1,4 @@
 <script>
-    import Icon from "./Icon.svelte";
     import Nested from "./Nested.svelte";
     import Modal from "./Modal.svelte";
     import Form from "./Form.svelte";
@@ -40,7 +39,7 @@
             style="--color: var(--dark)"
             on:click={(e) => (expand = !expand)}
         >
-            <Icon icon={expand ? "expand_less" : "expand_more"} />
+            icon
         </button>
         <button
             class="small holed"
@@ -51,7 +50,7 @@
                     [key]: object.id,
                 }))}
         >
-            <Icon icon="add" />
+            icon
         </button>
     </div>
     {#if expand}

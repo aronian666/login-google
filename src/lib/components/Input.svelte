@@ -2,6 +2,7 @@
     export let name;
     export let title;
     export let value;
+    export let error = false;
 </script>
 
 <fieldset>
@@ -16,6 +17,17 @@
         type="text"
         bind:value
         on:keypress
+        on:blur
         {...$$restProps}
     />
+    {#if error}
+        <span>{error}</span>
+    {/if}
 </fieldset>
+
+<style>
+    span {
+        color: var(--red);
+        font-size: 0.8rem;
+    }
+</style>

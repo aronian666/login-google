@@ -1,6 +1,6 @@
 import { createSupabaseServerClient } from "@supabase/auth-helpers-sveltekit"
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
-
+import { User } from "./lib/tables"
 
 export const handle = async ({ event, resolve }) => {
     event.locals.supabase = createSupabaseServerClient({
@@ -14,6 +14,8 @@ export const handle = async ({ event, resolve }) => {
         } = await event.locals.supabase.auth.getSession()
         return session
     }
+    const session = await event.locals.getSession()
+    event.locals.current_user = session && structuredClone(new User(session.user))
     return resolve(event, {
         filterSerializedResponseHeaders(name) {
             return name === 'content-range'

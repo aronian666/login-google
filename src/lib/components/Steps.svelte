@@ -1,7 +1,6 @@
 <script>
     import { setContext } from "svelte";
     import { writable } from "svelte/store";
-    import Icon from "./Icon.svelte";
 
     export let steps = [];
     let step = writable(0);
@@ -20,7 +19,7 @@
                 class="grid content"
                 style="--c: center"
             >
-                <Icon icon={a.icon} />
+                Icon
             </div>
             {#if i !== steps.length - 1}
                 <span style="--index: {i}" class:active={i < $step} />

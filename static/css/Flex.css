@@ -20,17 +20,16 @@
     flex: 1 1 max(var(--max1), var(--max2));
 }
 
-.flex.content,
-.grid.content {
-    place-content: var(--c, center);
+
+.content {
+    place-content: var(--c, center) !important;
 }
 
-.flex.items,
-.grid.items {
-    place-items: var(--i, center);
+.items {
+    place-items: var(--i, center) !important;
 }
 
-.flex.self,
-.grid.self {
+.flex>.self,
+.grid>.self {
     place-self: var(--s, center);
 }

@@ -38,46 +38,40 @@ export default class ActiveRecord {
     static get reference() { return supabase.from(this.table) }
     // Read
     static all(select) {
-        const request = this.reference.select(select || this.select, { count: "exact" })
-        if (request.search) return request
-        const that = this
-        request.search = function (search = "") {
-            const query = that.searchProperties.map(name => `${name}.ilike.%${search}%`).join(',')
-            if (search && that.searchProperties.length) this.or(query)
-            return this
-        }
-        request.matchSign = function (filter) {
-            let query = ""
-            if (Array.isArray(filter)) query = filter.filter(({ value }) => value).map(({ key, sign, value }) => [key, sign, value].filter(Boolean).join(".")).join(",")
-            else query = Object.entries(filter).map(([key, value]) => key + "." + value).join(",")
-            if (query) this.or(`and(${query})`)
-            return this
-        }
-        request.model = async function () {
-            const { data, count, error } = await this
-            if (error) console.error(error)
-            return { data: that.toArray(data), count, error }
-        }
-        return request
+        return this.reference.select(select || this.select, { count: "exact" })
+    }
+    static search(search) {
+        if (!search) return search
+        return this.searchProperties.map(name => `${name}.ilike.%${search}%`).join(',')
+    }
+    static matchSign(filter) {
+        if (!filter) return filter
+        let or = ""
+        if (Array.isArray(filter)) or = filter.filter(({ value }) => value).map(({ key, sign, value }) => [key, sign, value].filter(Boolean).join(".")).join(",")
+        else or = Object.entries(filter).map(([key, value]) => key + "." + value).join(",")
+        return `and(${or})`
     }
     static find(match, select) {
-        const query = this.reference.select(select || this.select).match(match).limit(1)
-        if (query.model) return query
-        const that = this
-        query.model = async function (model) {
-            const { data, error } = await this
-            if (error) console.error(error)
-            if (!model) return data[0]
-            return new that(data[0])
-        }
+        return this.reference.select(select || this.select).match(match).limit(1)
+
+    }
+    static filter({ search, matches, page, perPage, ascending, order, select }) {
+        search = this.search(search)
+        matches = this.matchSign(matches)
+        const query = this.all(select)
+        if (search) query.or(search)
+        if (matches) query.or(matches)
+        page = Number(page)
+        query.order(order, { ascending }).range(page * perPage, (page + 1) * perPage - 1)
         return query
     }
     // Write
     static create(...records) { return this.reference.insert(records) }
     static update(match, properties) { return this.reference.update(properties).match(match) }
-    static upsert(...records) { return this.reference.upsert(records) }
+    static upsert(...records) { return this.reference.upsert(records.map(record => this.clean(record))) }
     static delete(match) { return this.reference.delete().match(match) }
     static clean(record) {
+        record = structuredClone(record)
         for (let [key, value] of Object.entries(record)) {
             if (!this.permit.includes(key) && typeof value === "object") delete record[key]
         }
@@ -86,6 +80,12 @@ export default class ActiveRecord {
     static searchProperties = []
     static select = "*"
     static permit = ["created_at"]
+    static filterParams = {
+        page: 0,
+        perPage: 10,
+        order: "id",
+        ascending: true
+    }
     static toArray(array = []) {
         return array.map(item => new this(item))
     }
