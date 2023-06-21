@@ -1,7 +1,7 @@
 <script>
     import { Table, Modal } from "../../../../lib/components";
     import { goto, invalidateAll } from "$app/navigation";
-    import { Record, Store, Report } from "../../../../lib/tables";
+    import { Record, Store, Day } from "../../../../lib/tables";
     import { loading } from "$lib/stores";
     import AddRecord from "./AddRecord.svelte";
     export let data;
@@ -59,7 +59,7 @@
             <button
                 on:click={async (e) => {
                     $loading = true;
-                    await store.getNewRecord(1, {
+                    await store.getNewRecord(2, {
                         store_id: data.store.id,
                         user_id: data.current_user.id,
                     });
@@ -91,18 +91,21 @@
             </button>
             <button
                 on:click={async (e) => {
-                    $loading = true;
-                    await store.getNewRecord(3, {
-                        store_id: data.store.id,
+                    if (!confirm("Confirma para cerrar este Dia?")) return;
+                    const day = new Day({
                         user_id: data.current_user.id,
+                        store_id: data.store.id,
+                        down: summary[0].value,
+                        up: summary[1].value,
+                        commission: summary[2].value,
+                        operations: summary[3].value,
                     });
-                    await invalidateAll();
-                    $loading = false;
+                    await day.create(false);
+                    return goto("/stores/" + store.id);
                 }}
-                class="holed"
             >
                 <iconify-icon icon="ph:download-bold" width="1.5rem" />
-                Actualizacion profunda
+                Cerrar dia
             </button>
         </div>
         <Table

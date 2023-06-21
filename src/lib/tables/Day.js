@@ -6,5 +6,5 @@ export default class Report extends ActiveRecord {
     constructor(report) {
         super(report, { user: User, store: Store })
     }
-    static table = "reports"
+    static table = "days"
 }
