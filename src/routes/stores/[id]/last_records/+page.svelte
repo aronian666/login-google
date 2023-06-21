@@ -103,8 +103,9 @@
                     await day.create(false);
                     return goto("/stores/" + store.id);
                 }}
+                class="holed"
             >
-                <iconify-icon icon="ph:download-bold" width="1.5rem" />
+                <iconify-icon icon="mdi:paper-off-outline" width="1.5rem" />
                 Cerrar dia
             </button>
         </div>
